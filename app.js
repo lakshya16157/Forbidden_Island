@@ -108,7 +108,9 @@
     const treasures = Object.keys(treasureNames).map(k => `<div class="treasure-item ${state.treasures[k] ? 'obtained' : ''}"><span class="treasure-symbol treasure-${k}">${symbols[k]}</span><span>${treasureNames[k]}<small>${state.treasures[k] ? 'RECOVERED' : 'NOT FOUND'}</small><span class="treasure-sites">${state.tiles.filter(t => t.treasure === k).map(t => `${escapeHTML(t.name)}${t.status === 'sunk' ? ' (sunk)' : ''}`).join(' / ')}</span></span></div>`).join('');
     const actionButtons = types.map(type => `<button class="action-button ${type === selectedType ? 'selected' : ''} ${['endActions','drawTreasure','drawFlood','escape'].includes(type) ? 'advance' : ''}" data-type="${type}" aria-pressed="${type === selectedType}"><span>${typeIcons[type] || '·'}</span>${typeNames[type] || title(type)}</button>`).join('');
     let optionHTML = '';
-    if (selectedType) {
+    // Only open the choices list when there is nothing on the board to click (or a tile needs narrowing down).
+    const hasCardAlternative = cardFilter && selectedType === 'discard' && legal.some(a => a.player === cardFilter.owner && (a.type === cardFilter.card || (cardFilter.card === 'helicopter' && a.type === 'escape')));
+    if (selectedType && (targets.size === 0 || targetTile !== null || hasCardAlternative)) {
       const hint = targets.size ? 'Choose a highlighted tile, or choose an option below.' : 'Choose an option below.';
       const alternatives = cardFilter && selectedType === 'discard' ? legal.filter(a => a.player === cardFilter.owner && (a.type === cardFilter.card || (cardFilter.card === 'helicopter' && a.type === 'escape'))) : [];
       const alternativeTypes = [...new Set(alternatives.map(a => a.type))];
@@ -137,7 +139,14 @@
       const canPlay = legal.some(a => a.type === card && a.player === owner);
       const canEscape = card === 'helicopter' && legal.some(a => a.type === 'escape' && a.player === owner);
       selectedType = canDiscard ? 'discard' : canPlay ? card : canEscape ? 'escape' : 'give';
-      cardFilter = {owner, card}; targetTile = null; render();
+      cardFilter = {owner, card}; targetTile = null;
+      // One obvious action (e.g. just discarding): do it on the first click.
+      const matches = legal.filter(a => a.type === selectedType && (
+        (selectedType === 'give' && a.card === card) ||
+        (selectedType === 'discard' && a.player === owner && a.card === card) ||
+        ((selectedType === 'helicopter' || selectedType === 'sandbag' || selectedType === 'escape') && a.player === owner)));
+      if (matches.length === 1 && !(canDiscard && (canPlay || canEscape))) { run(matches[0]); return; }
+      render();
       gameEl.querySelector('.tile.target:not(:disabled), [data-option], [data-card-choice]')?.focus();
     });
     gameEl.querySelectorAll('[data-type]').forEach(button => button.onclick = () => {

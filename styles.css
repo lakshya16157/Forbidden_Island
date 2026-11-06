@@ -608,3 +608,63 @@ body { font-size: 15px; }
 
 /* Treasure sites whose treasure has been captured */
 .tile-symbol.captured { filter: blur(3px); opacity: .55; }
+
+/* ===== Bigger text for the important bits ===== */
+body { font-size: 16px; }
+.eyebrow, .section-label { font-size: 12.5px; letter-spacing: .1em; }
+.panel-title { font-size: 20px; }
+.top-row .panel-title { font-size: 22px; }
+.top-row .helper, .helper { font-size: 15px; }
+.action-button { font-size: 15px; padding: 10px 14px; }
+.option { font-size: 14px; padding: 9px 12px; }
+.notice { font-size: 14px; }
+
+/* Players */
+.role-card .player-name { font-size: 17px; }
+.player-role { font-size: 14px; }
+.hand-count { font-size: 14px; font-weight: 700; }
+.role-ability, .role-ability summary { font-size: 13px; }
+.current-tag { font-size: 11px; }
+.hand .game-card-name { font-size: 14px; min-height: 32px; }
+.hand .game-card-icon { min-width: 24px; height: 24px; font-size: 15px; }
+
+/* Decks */
+.deck-label { font-size: 11px; font-weight: 800; letter-spacing: .06em; }
+.deck-count { font-size: 18px; }
+.deck-discard { font-size: 12px; }
+.deck-discard .game-card-name, .deck-discard .game-card-name { font-size: 11px; font-weight: 800; }
+.deck-discard--empty span { font-size: 12px; }
+.top-row .deck-stack { width: 70px; height: 98px; }
+.top-row .deck-discard { width: 60px; height: 84px; }
+
+/* Board */
+.tile-name { font-size: clamp(11px, 2.2cqw, 18px); }
+.tile-status { font-size: clamp(10px, 1.7cqw, 13px); }
+.pawn { min-width: 24px; height: 24px; font-size: 13px; }
+.water-vertical .section-label { font-size: 11.5px; }
+.water-vertical strong { font-size: 28px; }
+.water-vertical strong small { font-size: 12px; }
+.water-vertical .small { font-size: 14px; }
+
+/* Treasures and journal */
+.treasure-item { font-size: 15px; font-weight: 600; }
+.treasure-item small { font-size: 12px; }
+.treasure-sites { font-size: 12px; }
+.log-entry { font-size: 15px; }
+.small { font-size: 13px; }
+.panel-toggle { font-size: 13px; padding: 4px 11px; }
+.btn { font-size: 15px; }
+.action-button { font-size: 14.5px; padding: 9px 12px; }
+.board-row .board-wrap { width: max(580px, min(calc(100% - 92px), calc(100vh - 335px))); }
+@media (max-width: 800px) { .board-row .board-wrap { width: calc(100% - 70px); } }
+
+/* Choices list floats over the page instead of pushing the board down */
+.top-row { position: relative; z-index: 30; }
+.top-row .combined { min-height: 200px; }
+.combined .action-choices { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 40; max-height: 45vh; overflow-y: auto; margin: 0; padding: 12px 16px; border: 1px solid rgba(233,189,107,.6); border-radius: 10px; background: #0f2e33; box-shadow: 0 14px 34px rgba(0,0,0,.65); }
+.combined .action-choices .options { display: flex; flex-wrap: wrap; gap: 6px; }
+.combined .action-choices .helper { margin: 4px 0 8px; }
+
+/* Board fits its panel */
+.board-row .board-wrap { padding: 6px; }
+.board-row .board { gap: 5px; }
