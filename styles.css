@@ -451,3 +451,160 @@ button.game-card { box-shadow: 0 2px 4px #0008, 0 0 0 1px rgba(255,222,133,.7); 
 .hand .game-card { flex: 0 0 48px; width: 48px; height: 72px; }
 .hand .game-card-name { font-size: 8px; }
 @media (max-width: 600px) { .hand .game-card { flex-basis: 52px; width: 52px; height: 76px; } }
+
+/* Larger cards */
+.game-layout { grid-template-columns: minmax(300px, 350px) minmax(420px, 1fr) minmax(260px, 320px); }
+.hand { gap: 5px; }
+.hand .game-card { flex: 0 0 70px; width: 70px; height: 105px; max-width: none; padding: 4px; }
+.hand .game-card-name { font-size: 11px; min-height: 26px; }
+.hand .game-card-icon { top: 6px; left: 6px; min-width: 18px; height: 18px; font-size: 12px; }
+.deck-stack { width: 70px; height: 98px; }
+.deck-discard { width: 58px; height: 82px; }
+.deck-group { flex-basis: 130px; }
+.deck-discard .game-card-name { font-size: 10px; }
+@media (max-width: 1150px) { .game-layout { grid-template-columns: minmax(300px, 350px) minmax(380px, 1fr); } }
+@media (max-width: 720px) { .game-layout { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .hand .game-card { flex-basis: 64px; width: 64px; height: 96px; } }
+
+/* Hide / show panels */
+.panel-head .status-pill { margin-left: auto; }
+.panel-toggle { flex: none; margin-left: 8px; padding: 3px 9px; border: 1px solid rgba(233,189,107,.4); border-radius: 999px; background: transparent; color: #e4cb90; font: 600 11px/1.2 var(--sans); cursor: pointer; }
+.panel-toggle:hover { background: rgba(233,189,107,.15); }
+.panel-head:only-child, .panel.collapsed > .panel-head { margin-bottom: 0; }
+.panel.collapsed > .panel-body { display: none; }
+
+/* Even bigger cards, stacked in a vertical column */
+.game-layout { grid-template-columns: minmax(150px, 190px) minmax(420px, 1fr) minmax(260px, 320px); }
+.left-sidebar .player-list { display: flex; flex-direction: column; gap: 12px; }
+.hand { flex-direction: column; flex-wrap: nowrap; align-items: center; gap: 8px; }
+.hand .game-card { flex: 0 0 auto; width: 120px; height: 180px; padding: 5px; }
+.hand .game-card-name { font-size: 14px; min-height: 32px; }
+.hand .game-card-icon { top: 8px; left: 8px; min-width: 22px; height: 22px; font-size: 15px; }
+.deck-stack { width: 84px; height: 118px; }
+.deck-discard { width: 70px; height: 98px; }
+@media (max-width: 1150px) { .game-layout { grid-template-columns: minmax(150px, 190px) minmax(380px, 1fr); } }
+@media (max-width: 720px) { .game-layout { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .hand .game-card { width: 100px; height: 150px; flex-basis: auto; } }
+#undo-button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Top row: action + decks; vertical water meter beside the board */
+.top-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; padding-top: 20px; }
+.top-row .deck-display { margin: 0; }
+.game-layout { padding-top: 20px; }
+.board-row { display: flex; align-items: stretch; gap: 14px; }
+.board-row .board-wrap { flex: 1 1 auto; min-width: 0; }
+.water-vertical { flex: 0 0 76px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 8px; border: 1px solid rgba(143,199,184,.2); border-radius: 12px; background: rgba(4,28,35,.55); text-align: center; }
+.water-vertical strong { font-size: 22px; }
+.water-vertical strong small { display: block; }
+.water-vertical .meter-track { flex: 1 1 auto; width: 26px; min-height: 240px; margin: 4px 0; position: relative; }
+.water-vertical .meter-fill { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; background: linear-gradient(0deg, #5db7ac, #d9aa5f 70%, #d9644f); transition: height .3s; }
+@media (max-width: 900px) { .top-row { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .water-vertical { flex-basis: 56px; } }
+
+/* Two-column layout: crew on the left, board + journal fill the rest */
+.game-layout { grid-template-columns: minmax(150px, 190px) minmax(0, 1fr); }
+.board { width: min(100%, 900px); }
+.board-area .log-panel { margin-top: 16px; }
+.board-area .log { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 4px 18px; }
+@media (max-width: 720px) { .game-layout { grid-template-columns: 1fr; } }
+
+/* Player 1 (and 3) left, player 2 (and 4) right */
+.game-layout { grid-template-columns: minmax(150px, 190px) minmax(0, 1fr) minmax(150px, 190px); }
+.board-area .treasures-panel { margin-top: 16px; }
+.board-area .treasure-strip { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+@media (max-width: 900px) { .game-layout { grid-template-columns: 1fr; } .game-layout > .sidebar { order: 0; } .board-area { order: -1; } }
+
+/* ===== Final polish: fit-to-screen layout, square board, readable text ===== */
+body { font-size: 15px; }
+.app-shell { padding: 0 20px 24px; }
+.topbar { min-height: 60px; }
+.game-layout { --side: clamp(220px, 18vw, 280px); grid-template-columns: var(--side) minmax(0, 1fr) var(--side); gap: 16px; padding-top: 14px; align-items: start; }
+.sidebar { position: sticky; top: 8px; max-height: calc(100vh - 16px); overflow-y: auto; scrollbar-width: thin; gap: 12px; }
+.sidebar .panel { padding: 12px; }
+
+/* Top row now lives above the board */
+.top-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: stretch; padding: 0; margin-bottom: 12px; }
+.top-row .panel { padding: 12px 14px; }
+.top-row .panel-title { font-size: 18px; }
+.top-row .helper { margin-top: 6px; font-size: 13px; }
+.top-row .action-bar { margin-top: 10px; }
+.top-row .deck-display { margin: 0; }
+.top-row .deck-row { flex-wrap: nowrap; gap: 14px; justify-content: center; margin-top: 6px; }
+.top-row .deck-group { flex: 0 0 auto; gap: 6px; }
+.top-row .deck-stack { width: 62px; height: 88px; }
+.top-row .deck-discard { width: 52px; height: 74px; }
+
+/* Square board, sized to the screen */
+.board-row { display: flex; justify-content: center; align-items: stretch; gap: 12px; }
+.board-row .board-wrap { flex: 0 0 auto; width: max(520px, min(calc(100% - 92px), calc(100vh - 290px))); aspect-ratio: 1 / 1; padding: 10px; container-type: inline-size; }
+.board-row .board { width: 100%; height: 100%; aspect-ratio: auto; margin: 0; gap: 6px; }
+.tile { padding: 6px 7px; }
+.tile::before { content: ''; position: absolute; inset: auto 0 0 0; height: 60%; background: linear-gradient(transparent, rgba(2,15,18,.85)); pointer-events: none; }
+.tile-sunk::before { display: none; }
+.tile-name { font-size: clamp(11px, 2.3cqw, 16px); color: #fff; text-shadow: 0 1px 3px #000, 0 0 8px #000; line-height: 1.15; }
+.tile-symbol { font-size: clamp(16px, 3.4cqw, 28px); }
+.tile-status { font-size: clamp(9px, 1.5cqw, 12px); font-weight: 700; opacity: 1; color: #fff; text-shadow: 0 1px 3px #000; }
+.pawn { min-width: 20px; height: 20px; font-size: 11px; }
+
+/* Water meter: clear, same height as the board */
+.water-vertical { flex: 0 0 80px; padding: 10px 6px; }
+.water-vertical .section-label { font-size: 10px; }
+.water-vertical .meter-track { width: 30px; min-height: 0; background: repeating-linear-gradient(0deg, transparent 0 calc(10% - 1px), rgba(255,255,255,.35) calc(10% - 1px) 10%), rgba(4,23,29,.9); border: 1px solid rgba(143,199,184,.35); }
+.water-vertical .small { font-size: 12px; font-weight: 700; color: #e6efe9; }
+
+/* Hands: 2-up grid of big cards */
+.hand { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; justify-items: center; flex-direction: row; }
+.hand .game-card { width: 100%; max-width: 120px; height: auto; aspect-ratio: 2 / 3; flex: none; }
+.hand .game-card-name { font-size: 12px; min-height: 28px; font-weight: 800; }
+.hand .game-card-icon { top: 6px; left: 6px; min-width: 20px; height: 20px; font-size: 13px; }
+.hand .small { grid-column: 1 / -1; }
+.player-card { padding: 8px; }
+.player-role { font-size: 12px; color: #c4d5cd; }
+.role-card .player-name { font-size: 15px; }
+.hand-count { font-size: 12px; }
+
+/* Readability */
+.helper, .log-entry { font-size: 13px; color: #d3e0da; }
+.action-button { font-size: 13px; padding: 8px 12px; }
+.treasure-item { font-size: 12.5px; color: #d6dccb; }
+.treasure-item small { font-size: 10px; }
+.small { font-size: 12px; }
+.eyebrow { font-size: 11px; }
+.board-area .treasures-panel, .board-area .log-panel { margin-top: 12px; }
+
+@media (max-width: 1100px) {
+  .game-layout { grid-template-columns: var(--side) minmax(0, 1fr); }
+  .game-layout > .right-sidebar { grid-column: 1 / -1; grid-row: 2; position: static; max-height: none; }
+  .right-sidebar .player-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+}
+@media (max-width: 800px) {
+  .game-layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; max-height: none; }
+  .board-area { order: -1; }
+  .top-row { grid-template-columns: 1fr; }
+  .board-row .board-wrap { width: calc(100% - 70px); }
+  .water-vertical { flex-basis: 58px; }
+}
+
+/* Tile text: no mid-word breaks */
+.board-row .board-wrap { width: max(580px, min(calc(100% - 92px), calc(100vh - 290px))); }
+.tile { padding: 5px 6px; }
+.tile-name { font-size: clamp(9.5px, 1.95cqw, 16px); overflow-wrap: break-word; word-break: normal; hyphens: manual; letter-spacing: 0; }
+@media (max-width: 800px) { .board-row .board-wrap { width: calc(100% - 70px); } .tile-name { font-size: clamp(8px, 2.2cqw, 12px); } }
+
+/* Action + decks as one panel */
+.top-row { grid-template-columns: 1fr; }
+.top-row .combined { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 14px 18px; }
+.combined .action-main { min-width: 0; }
+.combined .deck-display { margin: 0; padding: 0 0 0 20px; border: 0; border-left: 1px solid rgba(233,189,107,.28); border-radius: 0; background: none; box-shadow: none; }
+.combined .deck-display .panel-head { margin-bottom: 4px; }
+.combined .deck-row { margin-top: 2px; }
+@media (max-width: 800px) {
+  .top-row .combined { grid-template-columns: 1fr; gap: 12px; }
+  .combined .deck-display { padding: 12px 0 0; border-left: 0; border-top: 1px solid rgba(233,189,107,.28); }
+}
+.combined .deck-display .panel-toggle { display: none; }
+.combined .deck-display.collapsed > .panel-body { display: block; }
+
+/* Treasure sites whose treasure has been captured */
+.tile-symbol.captured { filter: blur(3px); opacity: .55; }
