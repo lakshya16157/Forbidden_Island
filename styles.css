@@ -668,3 +668,38 @@ body { font-size: 16px; }
 /* Board fits its panel */
 .board-row .board-wrap { padding: 6px; }
 .board-row .board { gap: 5px; }
+
+/* Water meters at both extreme ends; the row spans the same width as the action box */
+.board-row { width: 100%; justify-content: space-between; }
+.board-row .board-wrap { width: max(520px, min(calc(100% - 184px), calc(100vh - 335px))); }
+.water-vertical { flex: 0 0 80px; }
+@media (max-width: 800px) {
+  .board-row .board-wrap { width: calc(100% - 124px); }
+  .water-vertical { flex-basis: 56px; padding: 8px 4px; }
+}
+
+/* Water meters sit outside the player columns: left of P1, right of P2 */
+.game-layout { grid-template-columns: 84px var(--side) minmax(0, 1fr) var(--side) 84px; gap: 14px; }
+.game-layout > .water-vertical { position: sticky; top: 8px; height: calc(100vh - 16px); max-height: 760px; flex: none; }
+.board-row { justify-content: center; }
+.board-row .board-wrap { width: max(520px, min(100%, calc(100vh - 335px))); }
+.water-vertical .meter-fill { height: var(--lvl); }
+@media (max-width: 1250px) { .game-layout { --side: 210px; grid-template-columns: 70px var(--side) minmax(0, 1fr) var(--side) 70px; } .water-vertical strong { font-size: 22px; } }
+@media (max-width: 1100px) {
+  .game-layout { grid-template-columns: 1fr; }
+  .game-layout > .sidebar, .game-layout > .right-sidebar { grid-column: auto; grid-row: auto; }
+  .game-layout > .board-area { order: -1; }
+  .game-layout > .water-vertical:first-child { order: -2; }
+  .game-layout > .water-vertical:last-child { display: none; }
+  .game-layout > .water-vertical { position: static; height: auto; max-height: none; flex-direction: row; justify-content: center; gap: 14px; padding: 8px 12px; width: 100%; }
+  .water-vertical .meter-track { flex: 1 1 auto; width: auto; height: 18px; min-height: 0; margin: 0; }
+  .water-vertical .meter-fill { width: var(--lvl); height: 100%; right: auto; top: 0; bottom: 0; }
+  .water-vertical strong small { display: inline; }
+}
+@media (max-width: 800px) { .board-row .board-wrap { width: 100%; } }
+
+/* Compact action box: the buttons speak for themselves */
+.top-row .combined { min-height: 0; padding: 10px 16px; }
+.top-row .action-bar { margin-top: 0; }
+.top-row .combined .deck-display .panel-head { margin-bottom: 2px; }
+.board-row .board-wrap { width: max(520px, min(100%, calc(100vh - 250px))); }
